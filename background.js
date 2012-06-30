@@ -34,7 +34,7 @@ rct.getTweets = function(query) {
       dataType: 'jsonp',
       data: {q: query},
       success: function(data, textStatus, xhr) {
-        rct.processTweets(data);
+        rct.processTweets(data.results);
       }
     }
   );
@@ -47,8 +47,9 @@ rct.processTweets = function(data) {
       'url': 'results.html'
     }, 
     function(tab) {
-      ;
-      // TODO: put html in tab
+      chrome.tabs.sendMessage(tab.id, {data: data}, function(response) {
+        console.log(response.farewell);
+      });
     }
   );
 };
@@ -57,7 +58,6 @@ rct.handleRightClk = function(info, tab) {
   rct.searchCnt =+ 1;
   rct.updateTweetCount();
   rct.getTweets(info.selectionText);
-  // TODO(allard):open new tab, show results;
 }
 
 rct.handleExtClick = function() {
