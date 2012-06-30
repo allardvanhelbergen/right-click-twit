@@ -3,7 +3,10 @@
   "version": "1.0",
   "description": "Find Tweets from selected text with a right click.",
   "background": {
-    "scripts": ["background.js"]
+    "scripts": [
+      "jquery-1.7.2.min.js",
+      "background.js"
+    ]
   },
   "icons": {"16": "icon.png"},
   "permissions": [
@@ -13,7 +16,7 @@
     "contextMenus"
   ],
   "browser_action": {
-    "default_title": "Search for in Tweets.",
+    "default_title": "Show you last 10 Tweet searches.",
     "default_icon": "icon.png",
     "default_popup": "popup.html"
   },
