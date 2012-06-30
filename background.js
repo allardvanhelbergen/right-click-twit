@@ -24,8 +24,23 @@ rct.getTweets = function(query) {
   }
   
   console.log('Getting Tweets for: ' + query);
-  
+  $.ajax({
+    url: 'http://search.twitter.com/search.json',
+    type: 'GET',
+    dataType: 'jsonp',
+    data: {q: query},
+    success: function(data, textStatus, xhr) {
+      rct.processTweets(data);
+    }
+  });
 }
+
+rct.processTweets = function(data) {
+  console.log(data);
+  // TODO: process all tweets in to html
+  // TODO: open tab
+  // TODO: put html in tab
+};
 
 rct.handleRightClk = function(info, tab) {
   rct.searchCnt =+ 1;
