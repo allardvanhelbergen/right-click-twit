@@ -41,15 +41,15 @@ rct.getTweets = function(query) {
 }
 
 rct.processTweets = function(data) {
-  console.log(data);
-  
   chrome.tabs.create({
       'url': 'results.html'
     }, 
     function(tab) {
-      chrome.tabs.sendMessage(tab.id, {data: data}, function(response) {
+      console.log(tab, data);
+      chrome.tabs.sendMessage(tab.id, {greeting: "hello"}, function(response) {
         console.log(response.farewell);
       });
+      //chrome.tabs.sendMessage(tab.id, {data: data});
     }
   );
 };
