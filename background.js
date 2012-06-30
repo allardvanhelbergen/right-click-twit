@@ -14,23 +14,28 @@ var rct = {};
  * @param (int) cnt The number to show.
  */
 rct.updateTweetCount = function() {
-  var cntString = String(rct.clickCnt);
-  chrome.browserAction.setBadgeText({text: cntString});
-  rct.clickCnt += 1;
+  var cnt = String(rct.searchCnt);
+  chrome.browserAction.setBadgeText({text: cnt});
 };
 
 rct.getTweets = function(query) {
-  query = (!query) ? '' : query;
-  console.log('getting Tweets for: ' + query);
+  if (!query) {
+    // TODO: system notification query undefined.
+  }
+  
+  console.log('Getting Tweets for: ' + query);
+  
 }
 
 rct.handleRightClk = function(info, tab) {
+  rct.searchCnt =+ 1;
   rct.updateTweetCount();
   rct.getTweets(info.selectionText);
+  // TODO(allard):open new tab, show results;
 }
 
 rct.handleExtClick = function() {
-  rct.updateTweetCount(rct.clickCnt);
+  // TODO(allard):collect last ten history, show in popup
 };
 
 /**
@@ -39,8 +44,8 @@ rct.handleExtClick = function() {
 rct.init = function() {
   console.log('RCT Initialised...');
   
-  rct.clickCnt = 0;
-  rct.updateTweetCount(rct.clickCnt);
+  rct.searchCnt = 0;
+  rct.updateTweetCount(rct.searchCnt);
   
   // Create context menu entry.
   chrome.contextMenus.create({
