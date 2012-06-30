@@ -10,10 +10,11 @@
   },
   "icons": {"16": "icon.png"},
   "permissions": [
+    "contextMenus",
     "tabs",
+    "notifications",
     "http://*/*",
-    "https://*/*",
-    "contextMenus"
+    "https://*/*"
   ],
   "browser_action": {
     "default_title": "Show you last 10 Tweet searches.",

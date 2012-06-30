@@ -20,10 +20,13 @@ rct.updateTweetCount = function() {
 
 rct.getTweets = function(query) {
   if (!query) {
-    // TODO: system notification query undefined.
+    var notification = webkitNotifications.createHTMLNotification(
+        'notification.html');
+    notification.show();
   }
   
-  console.log('Getting Tweets for: ' + query);
+  //TODO: add query to history
+  
   $.ajax({
     url: 'http://search.twitter.com/search.json',
     type: 'GET',
@@ -37,6 +40,7 @@ rct.getTweets = function(query) {
 
 rct.processTweets = function(data) {
   console.log(data);
+  
   // TODO: process all tweets in to html
   // TODO: open tab
   // TODO: put html in tab
