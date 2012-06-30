@@ -5,7 +5,7 @@
  */
 
 /**
- * Namespace for functions for Right CLick Twit.
+ * Namespace for functions for Right Click Twit.
  */
 var rct = {};
 
@@ -20,6 +20,7 @@ rct.updateTweetCount = function() {
 
 rct.getTweets = function(query) {
   if (!query) {
+    // TODO: make nice notification
     var notification = webkitNotifications.createHTMLNotification(
         'notification.html');
     notification.show();
@@ -28,22 +29,28 @@ rct.getTweets = function(query) {
   //TODO: add query to history
   
   $.ajax({
-    url: 'http://search.twitter.com/search.json',
-    type: 'GET',
-    dataType: 'jsonp',
-    data: {q: query},
-    success: function(data, textStatus, xhr) {
-      rct.processTweets(data);
+      url: 'http://search.twitter.com/search.json',
+      type: 'GET',
+      dataType: 'jsonp',
+      data: {q: query},
+      success: function(data, textStatus, xhr) {
+        rct.processTweets(data);
+      }
     }
-  });
+  );
 }
 
 rct.processTweets = function(data) {
   console.log(data);
   
-  // TODO: process all tweets in to html
-  // TODO: open tab
-  // TODO: put html in tab
+  chrome.tabs.create({
+      'url': 'results.html'
+    }, 
+    function(tab) {
+      ;
+      // TODO: put html in tab
+    }
+  );
 };
 
 rct.handleRightClk = function(info, tab) {
