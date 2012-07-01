@@ -5,39 +5,52 @@
   <script type="text/javascript" src="results.js"></script>
   <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
   <script type="text/javascript" src="jsrender.js"></script>
+  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
 
-  <h1>Right Click Twit Results</h1>
 
-  <div id="results">
-    <p>Results will be inserted here.</p>
+  <div class="container">
+
+    <div class="main">
+      <header>
+        <h1>Right Click Twit Results</h1>
+      </header>
+
+      <div id="results">
+        <p>Results will be inserted here.</p>
+      </div>
+    </div>
+    
+    <footer>
+      Right Click Twit by Allard van Helbergen, 2012
+    </footer
   </div>
-  
-   <div id="movieList"></div>
+
 
   <!-- JsRender Templates -->
   <script id="tweet-tmpl" type="text/x-jsrender">
-    <article class="result row">
-      <div class="span1 offset1">
+    <article class="result row offset2">
+      <div class="span1">
         <a href="http://twitter.com/{{>from_user}}">
           <img src="{{>profile_image_url}}">
           <br>
           {{>from_user_name}}
         </a>
       </div>
-      <div class="span5 offset1">
-        <strong>{{>text}}</strong>
-      </div>
-      <div class="span3 offset1">
+      <div class="span6">
+        <strong>{{:text}}</strong>
+        <br>
         <em>{{>created_at}}</em>
         <br>
         {{>iso_language_code}}
         <br>
         {{>geo}}
       </div>
-    </aritcle>
+    </article>
   </script>
+
 
 </body>
 </html>
