@@ -2,11 +2,11 @@
 <html>
 <head>
   <title>Right Click Twit - Results</title>
-  <script type="text/javascript" src="results.js"></script>
-  <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
-  <script type="text/javascript" src="jsrender.js"></script>
-  <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script type="text/javascript" src="../js/results.js"></script>
+  <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="../js/jsrender.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 <body>
 
@@ -35,18 +35,15 @@
       <div class="span1">
         <a href="http://twitter.com/{{>from_user}}">
           <img src="{{>profile_image_url}}">
-          <br>
-          {{>from_user_name}}
         </a>
       </div>
       <div class="span6">
+        {{>from_user_name}} says <br>
         <strong>{{:text}}</strong>
-        <br>
-        <em>{{>created_at}}</em>
-        <br>
-        {{>iso_language_code}}
-        <br>
-        {{>geo}}
+        <p class="meta">
+          <i class="icon-time"></i> {{>created_at}},
+          <i class="icon-screenshot"></i> {{>iso_language_code}}
+        </p>
       </div>
     </article>
   </script>

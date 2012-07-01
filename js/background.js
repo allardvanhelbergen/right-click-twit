@@ -22,7 +22,7 @@ rct.getTweets = function(query) {
   if (!query) {
     // TODO: make nice notification
     var notification = webkitNotifications.createHTMLNotification(
-        'notification.html');
+        'html/notification.html');
     notification.show();
   }
   
@@ -42,7 +42,7 @@ rct.getTweets = function(query) {
 
 rct.processTweets = function(data) {
   chrome.tabs.create({
-      'url': 'results.html'
+      'url': 'html/results.html'
     },
     function(tab) {
       console.log(tab, data);
