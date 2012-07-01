@@ -27,7 +27,6 @@ rct.getTweets = function(query) {
 
   //TODO: add query to history
   //JSON.stringify
-  //TODO: add failure clause
   $.ajax({
       url: 'http://search.twitter.com/search.json',
       type: 'GET',
@@ -35,6 +34,9 @@ rct.getTweets = function(query) {
       data: {q: query},
       success: function(data, textStatus, xhr) {
         rct.processTweets(data.results);
+      },
+      error: function(xhr, textStatus, error) {
+        console.error(error);
       }
     }
   );
