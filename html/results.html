@@ -6,6 +6,7 @@
   <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
   <script type="text/javascript" src="../js/jsrender.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lora:400italic">
   <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 <body>
@@ -32,20 +33,21 @@
   <!-- JsRender Templates -->
   <script id="tweet-tmpl" type="text/x-jsrender">
     <article class="result row offset2">
-      <div class="span1">
+      <div class="span1 avatar">
         <a href="http://twitter.com/{{>from_user}}">
           <img src="{{>profile_image_url}}">
         </a>
       </div>
       <div class="span6">
-        {{>from_user_name}} says <br>
-        <strong>{{:text}}</strong>
+        <p class="name"><span>{{>from_user_name}}</span> says:</p>
+        <p class="message">{{:text}}</p>
         <p class="meta">
           <i class="icon-time"></i> {{>created_at}},
           <i class="icon-screenshot"></i> {{>iso_language_code}}
         </p>
       </div>
     </article>
+    <hr>
   </script>
 
 
