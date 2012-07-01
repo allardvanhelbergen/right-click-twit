@@ -17,10 +17,9 @@ rct.rslt.init = function() {
       console.log(sender.tab ?
                   "from a content script:" + sender.tab.url :
                   "from the extension");
-      console.log(request.data);
 
-      if (request.greeting == "hello") {
-        sendResponse({farewell: "goodbye"});
+      if (request.action == 'parseTweets') {
+        console.log(request.data);
       }
     }
   );

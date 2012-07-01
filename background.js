@@ -27,7 +27,7 @@ rct.getTweets = function(query) {
   }
   
   //TODO: add query to history
-  
+  //TODO: add failure clause
   $.ajax({
       url: 'http://search.twitter.com/search.json',
       type: 'GET',
@@ -41,15 +41,12 @@ rct.getTweets = function(query) {
 }
 
 rct.processTweets = function(data) {
-  console.log(data);
-  
   chrome.tabs.create({
       'url': 'results.html'
-    }, 
+    },
     function(tab) {
-      chrome.tabs.sendMessage(tab.id, {data: data}, function(response) {
-        console.log(response.farewell);
-      });
+      console.log(tab, data);
+      chrome.tabs.sendMessage(tab.id, {'action': 'parseTweets', 'data': data});
     }
   );
 };
