@@ -26,6 +26,7 @@ rct.getTweets = function(query) {
   }
 
   //TODO: add query to history
+  //JSON.stringify
   //TODO: add failure clause
   $.ajax({
       url: 'http://search.twitter.com/search.json',
@@ -44,14 +45,15 @@ rct.processTweets = function(data) {
       'url': 'html/results.html'
     },
     function(tab) {
-      console.log(tab, data);
       chrome.tabs.sendMessage(tab.id, {'action': 'parseTweets', 'data': data});
     }
   );
 };
 
 rct.handleRightClk = function(info, tab) {
-  rct.searchCnt =+ 1;
+  rct.searchCnt += 1;
+  localStorage.searchCnt = rct.searchCnt;
+  
   rct.updateTweetCount();
   rct.getTweets(info.selectionText);
 }
@@ -66,7 +68,19 @@ rct.handleExtClick = function() {
 rct.init = function() {
   console.log('RCT Initialised...');
   
-  rct.searchCnt = 0;
+  // get Local Sotrage variables
+  if (!localStorage.tweetHistory) {
+    rct.tweetHistory = {};
+  } else {
+    rct.tweetHistory = localStorage.tweetHistory;
+  }
+  
+  if (!localStorage.searchCnt) {
+    rct.searchCnt = 0;
+  } else {
+    rct.searchCnt = parseInt(localStorage.searchCnt);
+  }
+  
   rct.updateTweetCount(rct.searchCnt);
   
   // Create context menu entry.
