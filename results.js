@@ -23,32 +23,9 @@ rct.rslt.init = function() {
 };
 
 rct.rslt.parseTweets = function(data) {
-  console.log($('#results'));
-  console.log($('#tweet-tmpl'));
-  
-  var tweets = [];
-  
-  for (var i = 0, tweet; tweet = data[i]; i++) {
-    console.log(tweet);
-    
-    tweets.push({
-        'from_user': tweet.from_user,
-        'profile_image_url': tweet.profile_image_url
-    });
-    
-  }
-  
-  var movies = [
-    { name: "The Red Violin", releaseYear: "1998" },
-    { name: "Eyes Wide Shut", releaseYear: "1999" },
-    { name: "The Inheritance", releaseYear: "1976" }
-  ];
-  
-  console.log(tweets);
   $( "#results" ).html(
-      $( "#tweet-tmpl" ).render( tweets )
+      $( "#tweet-tmpl" ).render( data )
   );
-  
 };
 
 rct.rslt.init();
