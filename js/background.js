@@ -20,12 +20,11 @@ rct.updateTweetCount = function() {
 
 rct.getTweets = function(query) {
   if (!query) {
-    // TODO: make nice notification
     var notification = webkitNotifications.createHTMLNotification(
         'html/notification.html');
     notification.show();
   }
-  
+
   //TODO: add query to history
   //TODO: add failure clause
   $.ajax({

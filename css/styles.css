@@ -45,3 +45,11 @@ hr {
   color: lightgray;
   margin: 20px auto;
 }
+
+#notification {
+  padding: 5px;
+}
+
+#notification .main {
+  padding: 10px;
+}
