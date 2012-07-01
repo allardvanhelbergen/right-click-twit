@@ -2,17 +2,54 @@
 <html>
 <head>
   <title>Right Click Twit - Results</title>
-  <script src="results.js"></script>
+  <script type="text/javascript" src="results.js"></script>
+  <script type="text/javascript" src="jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="jsrender.js"></script>
 </head>
 <body>
 
-<h1>You searched for</h1>
+  <h1>You searched for</h1>
 
-<p>These are the results.</p>
-
-<div id="results">
+  <div id="results">
+    <p>These are the results.</p>
+  </div>
   
-</div>
+   <div id="movieList"></div>
+
+  <!-- JsRender Templates -->
+  <script id="tweet-tmpl-old" type="text/x-jsrender">
+    <article class="result row">
+      <div class="span1 offset1">
+        <a href="http://twitter.com/{{from_user}}">
+          <img src="{{profile_image_url}}">
+          <br>
+          {{from_user_name}}
+        </a>
+      </div>
+      <div class="span5 offset1">
+        <strong>{{text}}</strong>
+      </div>
+      <div class="span3 offset1">
+        <em>{{created_at}}</em>
+        <br>
+        {{iso_language_code}}
+        <br>
+        {{geo}}
+      </div>
+    </aritcle>
+  </script>
+
+  <script id="tweet-tmpl" type="text/x-jsrender">
+    
+    <article class="result row">
+      <div class="span1 offset1">
+        {{:#index+1}}: <b>{{>name}}</b> ({{>releaseYear}})
+      </div>
+    </aritcle>
+      
+  </script>
+  
+ 
 
 </body>
 </html>
