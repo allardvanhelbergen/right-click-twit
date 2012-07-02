@@ -11,6 +11,9 @@ var rct = chrome.extension.getBackgroundPage().rct;
  */
 rct.rslt = {};
 
+/**
+ * Initiates all listeners and global variables.
+ */
 rct.rslt.init = function() {
   chrome.extension.onMessage.addListener(
     function(request, sender, sendResponse) {
@@ -22,10 +25,16 @@ rct.rslt.init = function() {
   );
 };
 
+/**
+ * Renders tweets to page.
+ * @param(Array) data Collection of tweet data.
+ */
 rct.rslt.parseTweets = function(data) {
   $('#results').html(
       $('#tweet-tmpl').render(data)
   );
 };
 
+
+// Run code when ready
 rct.rslt.init();

@@ -10,6 +10,36 @@
 var rct = {};
 
 /**
+ * Initiates all listeners and global variables.
+ */
+rct.init = function() {
+  
+  // get Local Sotrage variables
+  if (!localStorage.tweetHistory) {
+    rct.tweetHistory = {'queries': []};
+  } else {
+    rct.tweetHistory = JSON.parse(localStorage.tweetHistory);
+  }
+
+  if (!localStorage.searchCnt) {
+    rct.searchCnt = 0;
+  } else {
+    rct.searchCnt = parseInt(localStorage.searchCnt);
+  }
+
+  // Updat initial query count.
+  rct.updateTweetCount(rct.searchCnt);
+
+  // Create context menu entry.
+  chrome.contextMenus.create({
+      'type': 'normal',
+      'title': 'Get Tweets for "%s"',
+      'contexts': ['selection'],
+      'onclick': rct.handleRightClick
+  });
+};
+
+/**
  * Updates the count number shown over the extension icon.
  * @param (int) cnt The number to show.
  */
@@ -18,6 +48,37 @@ rct.updateTweetCount = function() {
   chrome.browserAction.setBadgeText({text: cnt});
 };
 
+/**
+ * Handles what happens when user right clicks: gets the tweets, updates 
+ * query count, and adds query to history.
+ * @param(Object) info Data that comes from the right click event.
+ * @param(Object) tab Data about the tab the event came from.
+ */
+rct.handleRightClick = function(info, tab) {
+  var query = info.selectionText;
+
+  if (!query) {
+    var notification = webkitNotifications.createHTMLNotification(
+        'html/notification.html');
+    notification.show();
+  } else {
+    rct.getTweets(query);
+
+    rct.searchCnt += 1;
+    localStorage.searchCnt = rct.searchCnt;
+    rct.updateTweetCount();
+
+    rct.tweetHistory.queries.push({'query': query});
+    localStorage.tweetHistory = JSON.stringify(rct.tweetHistory);
+    console.log(rct.tweetHistory);
+    console.log(localStorage.tweetHistory);
+  }
+}
+
+/**
+ * Makes an AJAX call for given query.
+ * @param(String) query The query to make the call for.
+ */
 rct.getTweets = function(query) {
   $.ajax({
       url: 'http://search.twitter.com/search.json',
@@ -34,6 +95,10 @@ rct.getTweets = function(query) {
   );
 }
 
+/**
+ * Opens a new tab and sends the tweets to it to be displayed.
+ * @param(Object) data The tweets.
+ */
 rct.processTweets = function(data) {
   chrome.tabs.create({
       'url': 'html/results.html'
@@ -44,61 +109,6 @@ rct.processTweets = function(data) {
   );
 };
 
-rct.handleRightClick = function(info, tab) {
-  var query = info.selectionText;
 
-  if (!query) {
-    var notification = webkitNotifications.createHTMLNotification(
-        'html/notification.html');
-    notification.show();
-  } else {
-    rct.getTweets(query);
-  
-    rct.searchCnt += 1;
-    localStorage.searchCnt = rct.searchCnt;
-    rct.updateTweetCount();
-  
-    rct.tweetHistory.queries.push({'query': query});
-    localStorage.tweetHistory = JSON.stringify(rct.tweetHistory);
-    console.log(rct.tweetHistory);
-    console.log(localStorage.tweetHistory);
-  }
-}
-
-/**
- * Initiates all listeners and global variables.
- */
-rct.init = function() {
-  console.log('RCT Initialised...');
-  
-  // get Local Sotrage variables
-  if (!localStorage.tweetHistory) {
-    rct.tweetHistory = {'queries': []};
-  } else {
-    rct.tweetHistory = JSON.parse(localStorage.tweetHistory);
-  }
-  
-  if (!localStorage.searchCnt) {
-    rct.searchCnt = 0;
-  } else {
-    rct.searchCnt = parseInt(localStorage.searchCnt);
-  }
-  
-  rct.updateTweetCount(rct.searchCnt);
-  
-  // Create context menu entry.
-  chrome.contextMenus.create({
-      'type': 'normal',
-      'title': 'Get Tweets for "%s"',
-      'contexts': ['selection'],
-      'onclick': rct.handleRightClick
-  });
-};
-
-
-rct.handleExtClick = function() {
-  
-};
-
-
+// Run code when ready
 rct.init()

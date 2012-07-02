@@ -11,20 +11,17 @@ var rct = chrome.extension.getBackgroundPage().rct;
  */
 rct.pop = {};
 
+/**
+ * Initiates code, renders query history.
+ */
 rct.pop.init = function() {
-  console.log('working');
-
   $('#latest-searches').html(
       $('#query-tmpl').render(rct.tweetHistory.queries)
   );
-  
-  /*for (var i = 0, query; query = rct.tweetHistory.queries[i]; i++) {
-    $('#latest-searches').append(
-        $('<li>').html(query.query)
-    );
-  }*/
 };
 
+
+// Run code when ready
 $(document).ready(
   rct.pop.init
 );
