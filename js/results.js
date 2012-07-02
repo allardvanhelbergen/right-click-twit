@@ -23,8 +23,8 @@ rct.rslt.init = function() {
 };
 
 rct.rslt.parseTweets = function(data) {
-  $( "#results" ).html(
-      $( "#tweet-tmpl" ).render( data )
+  $('#results').html(
+      $('#tweet-tmpl').render(data)
   );
 };
 
