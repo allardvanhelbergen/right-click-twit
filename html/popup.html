@@ -2,11 +2,27 @@
 <html>
 <head>
   <title>Right Click Twit - Popup</title>
-  <script src="../js/popup.js"></script>
+  <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
+  <script type="text/javascript" src="../js/jsrender.js"></script>
+  <script type="text/javascript" src="../js/popup.js"></script>
+  <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
-<body>
+<body id="popup">
 
-Will show history here.
+  <div>
+    <div class="main">
+      <p>These are your latest searches:</p>
+      <ul id="latest-searches">
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- JsRender Templates -->
+  <script id="query-tmpl" type="text/x-jsrender">
+    <li>{{>query}}</li>
+  </script>
 
 </body>
 </html>

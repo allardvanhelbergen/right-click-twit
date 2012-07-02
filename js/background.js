@@ -19,14 +19,6 @@ rct.updateTweetCount = function() {
 };
 
 rct.getTweets = function(query) {
-  if (!query) {
-    var notification = webkitNotifications.createHTMLNotification(
-        'html/notification.html');
-    notification.show();
-  }
-
-  //TODO: add query to history
-  //JSON.stringify
   $.ajax({
       url: 'http://search.twitter.com/search.json',
       type: 'GET',
@@ -52,17 +44,26 @@ rct.processTweets = function(data) {
   );
 };
 
-rct.handleRightClk = function(info, tab) {
-  rct.searchCnt += 1;
-  localStorage.searchCnt = rct.searchCnt;
-  
-  rct.updateTweetCount();
-  rct.getTweets(info.selectionText);
-}
+rct.handleRightClick = function(info, tab) {
+  var query = info.selectionText;
 
-rct.handleExtClick = function() {
-  // TODO(allard):collect last ten history, show in popup
-};
+  if (!query) {
+    var notification = webkitNotifications.createHTMLNotification(
+        'html/notification.html');
+    notification.show();
+  } else {
+    rct.getTweets(query);
+  
+    rct.searchCnt += 1;
+    localStorage.searchCnt = rct.searchCnt;
+    rct.updateTweetCount();
+  
+    rct.tweetHistory.queries.push({'query': query});
+    localStorage.tweetHistory = JSON.stringify(rct.tweetHistory);
+    console.log(rct.tweetHistory);
+    console.log(localStorage.tweetHistory);
+  }
+}
 
 /**
  * Initiates all listeners and global variables.
@@ -72,9 +73,9 @@ rct.init = function() {
   
   // get Local Sotrage variables
   if (!localStorage.tweetHistory) {
-    rct.tweetHistory = {};
+    rct.tweetHistory = {'queries': []};
   } else {
-    rct.tweetHistory = localStorage.tweetHistory;
+    rct.tweetHistory = JSON.parse(localStorage.tweetHistory);
   }
   
   if (!localStorage.searchCnt) {
@@ -90,8 +91,13 @@ rct.init = function() {
       'type': 'normal',
       'title': 'Get Tweets for "%s"',
       'contexts': ['selection'],
-      'onclick': rct.handleRightClk
+      'onclick': rct.handleRightClick
   });
+};
+
+
+rct.handleExtClick = function() {
+  
 };
 
 
