@@ -15,13 +15,10 @@ rct.rslt = {};
  * Initiates all listeners and global variables.
  */
 rct.rslt.init = function() {
-  chrome.extension.onMessage.addListener(
-    function(request, sender, sendResponse) {
-      console.log('Request received', request);
-      if (request.action == 'parseTweets') {
-        rct.rslt.parseTweets(request.data);
-      }
-    }
+  // Send message to get tweets.
+  chrome.extension.sendMessage(
+    {'action': 'getTweets'},
+    rct.rslt.parseTweets
   );
 };
 

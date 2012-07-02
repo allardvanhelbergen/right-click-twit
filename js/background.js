@@ -10,11 +10,37 @@
 var rct = {};
 
 /**
+ * Array to collect tweets in.
+ * @var (Array)
+ */
+rct.tweets = [];
+
+/**
+ * Object to collect tweet history data in, such as query strings.
+ * @var (Object)
+ */
+rct.tweetHistory = {};
+
+/**
+ * Count of the amount of searches done to date.
+ * @var (int)
+ */
+rct.searchCnt = 0;
+
+/**
  * Initiates all listeners and global variables.
  */
 rct.init = function() {
+  // Create Listener for results tab.
+  chrome.extension.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if (request.action == 'getTweets') {
+        sendResponse(rct.tweets);
+      }
+    }
+  );
   
-  // get Local Sotrage variables
+  // Get Local Sotrage variables
   if (!localStorage.tweetHistory) {
     rct.tweetHistory = {'queries': []};
   } else {
@@ -27,7 +53,7 @@ rct.init = function() {
     rct.searchCnt = parseInt(localStorage.searchCnt);
   }
 
-  // Updat initial query count.
+  // Update initial query count.
   rct.updateTweetCount(rct.searchCnt);
 
   // Create context menu entry.
@@ -70,8 +96,6 @@ rct.handleRightClick = function(info, tab) {
 
     rct.tweetHistory.queries.push({'query': query});
     localStorage.tweetHistory = JSON.stringify(rct.tweetHistory);
-    console.log(rct.tweetHistory);
-    console.log(localStorage.tweetHistory);
   }
 }
 
@@ -100,13 +124,8 @@ rct.getTweets = function(query) {
  * @param(Object) data The tweets.
  */
 rct.processTweets = function(data) {
-  chrome.tabs.create({
-      'url': 'html/results.html'
-    },
-    function(tab) {
-      chrome.tabs.sendMessage(tab.id, {'action': 'parseTweets', 'data': data});
-    }
-  );
+  rct.tweets = data;
+  chrome.tabs.create({'url': 'html/results.html'});
 };
 
 
