@@ -21,6 +21,11 @@ footer {
   box-shadow: 0px 5px 20px 1px darkcyan;
 }
 
+.loader {
+  margin: 50px 0;
+  text-align: center;
+}
+
 .avatar {
   text-align: center;
 }
