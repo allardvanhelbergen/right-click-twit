@@ -20,11 +20,5 @@
     "default_title": "Show you last 10 Tweet searches.",
     "default_icon": "img/icon.png",
     "default_popup": "html/popup.html"
-  },
-  "content_scripts": [
-    {
-      "matches": ["http://*/*", "https://*/*"],
-      "js": ["js/content.js"]
-    }
-  ]
+  }
 }
