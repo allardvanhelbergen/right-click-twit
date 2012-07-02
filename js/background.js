@@ -94,9 +94,33 @@ rct.handleRightClick = function(info, tab) {
     localStorage.searchCnt = rct.searchCnt;
     rct.updateTweetCount();
 
-    rct.tweetHistory.queries.push({'query': query});
-    localStorage.tweetHistory = JSON.stringify(rct.tweetHistory);
+    rct.addQueryToHistory(query);
   }
+}
+
+/**
+ * Adds a query to the history stack.
+ * @param(String) newQuery The query to add.
+ */
+rct.addQueryToHistory = function(newQuery) {
+  var oldQueries = rct.tweetHistory.queries;
+  
+  // If entry exists, take it out
+  for (var i = oldQueries.length - 1, oldQuery; oldQuery = oldQueries[i]; i--) {
+    if (oldQuery.query == newQuery) {
+      oldQueries.splice(i, 1);
+    }
+  }
+  
+  // Add new entry to the end.
+  oldQueries.push({'query': newQuery});
+  
+  // If too long shorten history.
+  if (oldQueries.length >= 20) {
+    oldQueries.shift();
+  }
+  rct.tweetHistory.queries = oldQueries;
+  localStorage.tweetHistory = JSON.stringify(rct.tweetHistory);
 }
 
 /**

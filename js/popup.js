@@ -16,7 +16,7 @@ rct.pop = {};
  */
 rct.pop.init = function() {
   $('#latest-searches').html(
-      $('#query-tmpl').render(rct.tweetHistory.queries)
+      $('#query-tmpl').render(rct.tweetHistory.queries.reverse())
   );
 };
 
