@@ -130,4 +130,6 @@ rct.processTweets = function(data) {
 
 
 // Run code when ready
-rct.init()
+$(document).ready(
+  rct.init
+);

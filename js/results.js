@@ -34,4 +34,7 @@ rct.rslt.parseTweets = function(data) {
 
 
 // Run code when ready
-rct.rslt.init();
+$(document).ready(
+  rct.rslt.init
+);
+
